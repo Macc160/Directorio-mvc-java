@@ -1,53 +1,50 @@
 package controlador;
-
 import modelo.*;
 import vista.*;
 
 public class ControladorInventario {
+    private BaseDeDatos baseDatos;
+    private InventarioVista vista;
 
-    private BaseDeDatos modelo;
-    private DirectorioVista vista;
-
-    public ControladorInventario(BaseDeDatos modelo, DirectorioVista vista) {
-        this.modelo = modelo;
+    public ControladorInventario(BaseDeDatos baseDatos, InventarioVista vista) {
+        this.baseDatos = baseDatos;
         this.vista = vista;
     }
 
     public void iniciar() {
         boolean salir = false;
-
         while (!salir) {
-            int op = vista.mostrarMenu();
-
-            switch (op) {
+            int opcion = vista.mostrarMenu();
+            switch (opcion) {
                 case 1:
-                    modelo.agregar(vista.pedirDatos());
-                    vista.mostrarMensaje("Empleado agregado.");
+                    Producto nuevo = vista.pedirDatosUsuario(); // Usamos Productos
+                    baseDatos.agregarProducto(nuevo);
+                    vista.mostrarMensaje("Producto agregado correctamente.");
                     break;
-
                 case 2:
-                    vista.mostrarEmpleado(modelo.buscar(vista.pedirCedula()));
+                    String skuBuscar = vista.pedirSku();
+                    Producto encontrado = baseDatos.buscarProductoSku(skuBuscar); // Usamos Productos
+                    vista.mostrarProducto(encontrado);
                     break;
-
                 case 3:
-                    vista.mostrarEmpleados(modelo.buscarTodos());
+                    vista.mostrarProductos(baseDatos.buscarTodos());
                     break;
-
                 case 4:
-                    if (modelo.eliminar(vista.pedirCedula()))
-                        vista.mostrarMensaje("Empleado eliminado.");
-                    else
-                        vista.mostrarMensaje("Empleado no encontrado.");
+                    String skuEliminar = vista.pedirSku();
+                    boolean eliminado = baseDatos.eliminarProducto(skuEliminar);
+                    if (eliminado) {
+                        vista.mostrarMensaje("Producto eliminado correctamente.");
+                    } else {
+                        vista.mostrarMensaje("Producto no encontrado.");
+                    }
                     break;
-
                 case 5:
                     salir = true;
+                    vista.mostrarMensaje("Saliendo del sistema...");
                     break;
-
                 default:
                     vista.mostrarMensaje("Opción inválida.");
             }
         }
     }
 }
-

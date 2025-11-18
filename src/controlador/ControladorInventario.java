@@ -3,12 +3,12 @@ package controlador;
 import modelo.*;
 import vista.*;
 
-public class ControladorDirectorio {
+public class ControladorInventario {
 
     private BaseDeDatos modelo;
     private DirectorioVista vista;
 
-    public ControladorDirectorio(BaseDeDatos modelo, DirectorioVista vista) {
+    public ControladorInventario(BaseDeDatos modelo, DirectorioVista vista) {
         this.modelo = modelo;
         this.vista = vista;
     }

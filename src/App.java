@@ -1,12 +1,12 @@
 import modelo.BaseDeDatos;
 import vista.DirectorioVista;
-import controlador.ControladorDirectorio;
+import controlador.ControladorInventario;
 
 public class App {
     public static void main(String[] args) {
         BaseDeDatos modelo = new BaseDeDatos();
         DirectorioVista vista = new DirectorioVista();
-        ControladorDirectorio controlador = new ControladorDirectorio(modelo, vista);
+        ControladorInventario controlador = new ControladorInventario(modelo, vista);
 
         controlador.iniciar();
     }
